@@ -6,4 +6,9 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\img\.DS_Store" />
+    <None Include="wwwroot\vendor\.DS_Store" />
+  </ItemGroup>
+
 </Project>
