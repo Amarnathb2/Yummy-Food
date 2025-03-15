@@ -1,0 +1,25 @@
+﻿@model List<YummyFood.Models.User>	
+@{
+	ViewData["Title"] = "User";
+}
+<h2>User List</h2>
+<table border="1">
+	<thead>
+		<tr>
+			<th>User Name</th>
+			<th>Email</th>
+			<th>Phone</th>
+			
+		</tr>
+		</thead>
+	<tbody>
+		@foreach (var user in Model)
+		{
+			<tr>
+				<td>@user.UserName</td>
+				<td>@user.UserEmail</td>
+				<td>@user.Phone</td>
+
+			</tr>
+		}	
+</table>
