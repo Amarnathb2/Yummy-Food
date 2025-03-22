@@ -1,17 +1,24 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-@Html.Partial("HomeSections/_HeroSection");
-@Html.Partial("HomeSections/_AboutSection");
-@Html.Partial("HomeSections/_WhyusSection");
-@Html.Partial("HomeSections/_StatesSection");
-@Html.Partial("HomeSections/_MenuSection");
-@Html.Partial("HomeSections/_TestimonialSection");
-@Html.Partial("HomeSections/_EventsSection");
-@Html.Partial("HomeSections/_ChefSection");
-@Html.Partial("HomeSections/_BookaTableSection");
-@Html.Partial("HomeSections/_GallerySection");
-@Html.Partial("HomeSections/_ContactSection");
-
+@if (User.Identity.IsAuthenticated)
+{
+    @Html.Partial("HomeSections/_HeroSection");
+    @Html.Partial("HomeSections/_AboutSection");
+    @Html.Partial("HomeSections/_WhyusSection");
+    @Html.Partial("HomeSections/_StatesSection");
+    @Html.Partial("HomeSections/_MenuSection");
+    @Html.Partial("HomeSections/_TestimonialSection");
+    @Html.Partial("HomeSections/_EventsSection");
+    @Html.Partial("HomeSections/_ChefSection");
+    @Html.Partial("HomeSections/_BookaTableSection");
+    @Html.Partial("HomeSections/_GallerySection");
+    @Html.Partial("HomeSections/_ContactSection");
+}
+else
+{
+    @Html.Partial("HomeSections/_Login")
+    ;
+}
 
 

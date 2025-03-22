@@ -49,7 +49,8 @@ public class HomeController : Controller
                 users.Add(new User
                 {
                     UserName = reader["UserName"] != DBNull.Value ? reader["UserName"].ToString() : "N/A",
-                    UserEmail = reader["UserEmail"] != DBNull.Value ? reader["UserEmail"].ToString() : "N/A",
+                    UserId = reader["UserId"] != DBNull.Value ? reader["UserId"].ToString() : "N/A",
+                    Email = reader["Email"] != DBNull.Value ? reader["Email"].ToString() : "N/A",
                     Phone = reader["Phone"] != DBNull.Value ? reader["Phone"].ToString() : "N/A",
                 });
             }
