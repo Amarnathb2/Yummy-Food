@@ -1,9 +1,4 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
-}
-<!-- Book A Table Section -->
+﻿
 <section id="book-a-table" class="book-a-table section">
 
     <!-- Section Title -->
@@ -19,7 +14,7 @@
             <div class="col-lg-4 reservation-img" style="background-image: url(./img/reservation.jpg);"></div>
 
             <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
-                <form action="forms/book-a-table.php" method="post" role="form" class="php-email-form">
+                <form action="submit" method="post" role="form" class="">
                     <div class="row gy-4">
                         <div class="col-lg-4 col-md-6">
                             <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
@@ -48,8 +43,8 @@
                     <div class="text-center mt-3">
                         <div class="loading">Loading</div>
                         <div class="error-message"></div>
-                        <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div>
-                        <button type="submit">Book a Table</button>
+                        @* <div class="sent-message">Your booking request was sent. We will call back or send an Email to confirm your reservation. Thank you!</div> *@
+                        <button type="submit" id="bookTable">Book a Table</button>
                     </div>
                 </form>
             </div><!-- End Reservation Form -->
@@ -59,3 +54,87 @@
     </div>
 
 </section><!-- /Book A Table Section -->
+<style>
+    #bookTable{
+        width:150px;
+        border-radius:20px;
+        background-color:red;
+        color:white;
+        border:none;
+        height:40px;
+    }
+</style>
+@section Scripts{
+   <script>
+       document.addEventListener("DOMContentLoaded", function () {
+    const form = document.querySelector("bookTable");
+    const errorDiv = document.querySelector(".error-message");
+
+    form.addEventListener("submit", function (event) {
+        event.preventDefault(); // Prevent form submission
+        let isValid = true;
+        let errorMessage = "";
+
+        // Select input fields
+        const name = document.getElementById("name");
+        const email = document.getElementById("email");
+        const phone = document.getElementById("phone");
+        const date = document.getElementById("date");
+        const time = document.getElementById("time");
+        const people = document.getElementById("people");
+
+        // Clear previous error messages
+        errorDiv.textContent = "";
+        errorDiv.style.display = "none";
+        errorDiv.style.color = "red"; // Set error message color to red
+
+        // Validation checks
+        if (name.value.trim() === "") {
+            isValid = false;
+            errorMessage += "Please enter your name.\n";
+        }
+        if (email.value.trim() === "" || !validateEmail(email.value)) {
+            isValid = false;
+            errorMessage += "Please enter a valid email address.\n";
+        }
+        if (phone.value.trim() === "" || !validatePhone(phone.value)) {
+            isValid = false;
+            errorMessage += "Please enter a valid phone number.\n";
+        }
+        if (date.value.trim() === "") {
+            isValid = false;
+            errorMessage += "Please select a date.\n";
+        }
+        if (time.value.trim() === "") {
+            isValid = false;
+            errorMessage += "Please select a time.\n";
+        }
+        if (people.value.trim() === "" || people.value <= 0) {
+            isValid = false;
+            errorMessage += "Please enter a valid number of people.\n";
+        }
+
+        // Display error message if validation fails
+        if (!isValid) {
+            errorDiv.textContent = errorMessage;
+            errorDiv.style.display = "block";
+        } else {
+            form.submit(); // Submit form if validation passes
+        }
+    });
+
+    // Email validation function
+    function validateEmail(email) {
+                 let emailPattern =  /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+        return emailPattern.test(email);
+    }
+
+    // Phone validation function
+    function validatePhone(phone) {
+        const phonePattern = /^[0-9]{10}$/; // Assuming a 10-digit number
+        return phonePattern.test(phone);
+    }
+});
+
+   </script>
+}

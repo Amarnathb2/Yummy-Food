@@ -174,3 +174,57 @@
   document.addEventListener('scroll', navmenuScrollspy);
 
 })();
+// Login JS
+document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById("login").addEventListener("click", function (event) {
+        event.preventDefault(); // Prevent form submission
+
+        // Clear previous error messages
+        let errors = document.querySelectorAll(".error");
+        errors.forEach(error => error.remove());
+
+        let email = document.getElementById("UserName").value.trim();
+        let password = document.getElementById("Password").value.trim();
+        let emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Basic email validation
+        let passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/; // Password with 6+ chars, 1 uppercase, 1 lowercase, 1 number
+
+        let isValid = true; // Flag to check validation status
+
+        // Email validation
+        if (email === "") {
+            showError("UserName", "Email is required");
+            isValid = false;
+        } else if (!emailPattern.test(email)) {
+            showError("UserName", "Invalid email format");
+            isValid = false;
+        }
+
+        // Password validation
+        if (password === "") {
+            showError("Password", "Password is required");
+            isValid = false;
+        } else if (!passwordPattern.test(password)) {
+            showError("Password", "Password must be at least 6 characters long and include an uppercase letter, a lowercase letter, and a number");
+            isValid = false;
+        }
+
+        // If valid, proceed with form submission
+        if (isValid) {
+            alert("Form submitted successfully!"); // Replace with actual form submission logic
+        }
+    });
+
+    // Function to display error messages
+    function showError(inputId, message) {
+        let inputField = document.getElementById(inputId);
+        let errorSpan = document.createElement("span");
+        errorSpan.className = "error text-danger";
+        errorSpan.innerText = message;
+        inputField.parentNode.appendChild(errorSpan);
+    }
+});
+
+//redirection from login page to signup page
+document.getElementById("register").addEventListener("click", function () {
+    window.location.href = "/signup"; // Redirect to the signup page
+});
