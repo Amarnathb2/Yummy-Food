@@ -1,6 +1,26 @@
-using Microsoft.AspNetCore.Authentication.Cookies;
+﻿using Microsoft.AspNetCore.Authentication.Cookies;
+using NETCore.MailKit.Extensions;
+using NETCore.MailKit.Infrastructure.Internal;
+using YummyFood.Models;
 
 var builder = WebApplication.CreateBuilder(args);
+// Configure MailKit
+builder.Services.AddMailKit(config =>
+{
+    config.UseMailKit(new MailKitOptions
+    {
+        Server = builder.Configuration["MailKitOptions:Server"],
+        Port = int.Parse(builder.Configuration["MailKitOptions:Port"]),
+        SenderEmail = builder.Configuration["MailKitOptions:SenderEmail"],
+        SenderName = builder.Configuration["MailKitOptions:SenderName"],
+        Account = builder.Configuration["MailKitOptions:SenderEmail"],
+        Password = builder.Configuration["MailKitOptions:Password"],
+        Security = true // Enables StartTLS
+    });
+});
+// ✅ Register EmailService for Dependency Injection
+builder.Services.AddScoped<EmailService>();
+
 builder.Services.AddSession();
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
