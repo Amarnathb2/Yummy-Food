@@ -11,9 +11,12 @@ namespace YummyFood.Controllers
     public class RegisterController : Controller
     {
         private readonly IConfiguration _configuration;
-        public RegisterController(IConfiguration configuration)
+        private readonly EmailService _emailService;
+
+        public RegisterController(IConfiguration configuration, EmailService emailService)
         {
             _configuration = configuration;
+            _emailService = emailService;
         }
         [HttpGet]
         [Route("/signup")]
@@ -22,7 +25,7 @@ namespace YummyFood.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Registration(User user)
+        public async Task<IActionResult> RegistrationAsync(User user)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
@@ -50,6 +53,11 @@ namespace YummyFood.Controllers
                         int result = command.ExecuteNonQuery();
                         if (result > 0)
                         {
+                            // ✅ Send email after successful registration
+                            string subject = "Welcome to YummyFood!";
+                            string message = $"<h3>Hi {username},</h3><p>Thank you for registering on YummyFood. Enjoy our services!</p>";
+                            await _emailService.SendEmailAsync(user.Email, subject, message);
+
                             return Redirect("/");
                         }
                     }
