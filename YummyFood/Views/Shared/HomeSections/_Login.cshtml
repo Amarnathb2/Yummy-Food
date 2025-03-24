@@ -13,19 +13,19 @@
                                     <h4 class="mt-1 mb-5 pb-1">We are The Yummy Food Team</h4>
                                 </div>
 
-                                <form>
+                                <form asp-action="AccountLogin" asp-controller="Login">
                                     <p>Please login to your account</p>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="UserName">Username</label>
-                                        <input type="email" id="UserName" class="form-control"
+                                        <input type="email" id="UserName" name="Email" class="form-control"
                                                placeholder="Email address" />
                                        
                                     </div>
 
                                     <div data-mdb-input-init class="form-outline mb-4">
                                         <label class="form-label" for="Password">Password</label>
-                                        <input type="password" id="Password" class="form-control" />
+                                        <input type="password" id="Password" name="Password" class="form-control" />
                                         
                                     </div>
 

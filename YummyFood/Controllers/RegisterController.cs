@@ -34,13 +34,13 @@ namespace YummyFood.Controllers
                     string userId = GenerateUserId();
                     var username= user.FirstName +" "+user.LastName;
                     string query = "INSERT INTO [User] (UserId, UserName, Email, Password, Birthday, Gender, Phone) VALUES (@UserId, @UserName, @Email, @Password,@Birthday, @Gender, @Phone)";
-
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@UserId", userId);
                         command.Parameters.AddWithValue("@UserName", username);
                         command.Parameters.AddWithValue("@Email", user.Email);
-                        command.Parameters.AddWithValue("@Password", user.Password); // Consider hashing
+                        command.Parameters.AddWithValue("@Password", hashedPassword); 
                         command.Parameters.AddWithValue("@Birthday", user.Birthday);
                         command.Parameters.AddWithValue("@Gender", user.Gender);
                         command.Parameters.AddWithValue("@Phone", user.PhoneNumber);
