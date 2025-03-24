@@ -22,7 +22,7 @@ namespace YummyFood.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Registeration(string name, string email, string password, string phone, string gender)
+        public IActionResult Registration(User user)
         {
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
@@ -32,22 +32,25 @@ namespace YummyFood.Controllers
                 {
                     connection.Open();
                     string userId = GenerateUserId();
-
-                    string query = "INSERT INTO User (UserId, UserName, Email, Password, Phone, Gender) VALUES (@UserId, @UserName, @Email, @Password, @Phone, @Gender)";
-
+                    var username= user.FirstName +" "+user.LastName;
+                    string query = "INSERT INTO [User] (UserId, UserName, Email, Password, Birthday, Gender, Phone) VALUES (@UserId, @UserName, @Email, @Password,@Birthday, @Gender, @Phone)";
+                    string hashedPassword = BCrypt.Net.BCrypt.HashPassword(user.Password);
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
                         command.Parameters.AddWithValue("@UserId", userId);
-                        command.Parameters.AddWithValue("@UserName", name);
-                        command.Parameters.AddWithValue("@Email", email);
-                        command.Parameters.AddWithValue("@Password", password); // Consider hashing
-                        command.Parameters.AddWithValue("@Phone", phone);
-                        command.Parameters.AddWithValue("@Gender", gender);
+                        command.Parameters.AddWithValue("@UserName", username);
+                        command.Parameters.AddWithValue("@Email", user.Email);
+                        command.Parameters.AddWithValue("@Password", hashedPassword); 
+                        command.Parameters.AddWithValue("@Birthday", user.Birthday);
+                        command.Parameters.AddWithValue("@Gender", user.Gender);
+                        command.Parameters.AddWithValue("@Phone", user.PhoneNumber);
+                        
+                       
 
                         int result = command.ExecuteNonQuery();
                         if (result > 0)
                         {
-                            return RedirectToAction("Success");
+                            return Redirect("/");
                         }
                     }
                 }

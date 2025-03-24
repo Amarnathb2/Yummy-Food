@@ -210,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // If valid, proceed with form submission
         if (isValid) {
-            alert("Form submitted successfully!"); // Replace with actual form submission logic
+            $('form').submit();
         }
     });
 
