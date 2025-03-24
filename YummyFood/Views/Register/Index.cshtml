@@ -1,37 +1,59 @@
-﻿<section class="vh-100 gradient-custom">
+﻿<section class="gradient-custom">
     <div class="container py-5 h-100">
         <div class="row justify-content-center align-items-center h-100">
             <div class="col-12 col-lg-9 col-xl-7">
                 <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
                     <div class="card-body p-4 p-md-5">
                         <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
-                        <form>
+                        <form asp-action="Registration" asp-controller="Register">
 
                             <div class="row">
                                 <div class="col-md-6 mb-4">
 
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="text" id="firstName" class="form-control form-control-lg" />
                                         <label class="form-label" for="firstName">First Name</label>
+                                        <input type="text" id="firstName" name="FirstName" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6 mb-4">
 
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="text" id="lastName" class="form-control form-control-lg" />
                                         <label class="form-label" for="lastName">Last Name</label>
+                                        <input type="text" id="lastName" name="LastName" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
                                     </div>
 
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-6 mb-4">
 
+                                    <div data-mdb-input-init class="form-outline">
+                                        <label class="form-label" for="password">Password</label>
+                                        <input type="password" id="password" name="Password" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
+                                    </div>
+
+                                </div>
+                                <div class="col-md-6 mb-4">
+
+                                    <div data-mdb-input-init class="form-outline">
+                                        <label class="form-label" for="confirmPassword">Confirm Password</label>
+                                        <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
+                                    </div>
+
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6 mb-4 d-flex align-items-center">
 
                                     <div data-mdb-input-init class="form-outline datepicker w-100">
-                                        <input type="text" class="form-control form-control-lg" id="birthdayDate" />
                                         <label for="birthdayDate" class="form-label">Birthday</label>
+                                        <input type="date" class="form-control form-control-lg" name="Birthday" id="birthdayDate" />
+                                        <span class="error-span"></span>
                                     </div>
 
                                 </div>
@@ -40,23 +62,23 @@
                                     <h6 class="mb-2 pb-1">Gender: </h6>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="femaleGender"
-                                               value="option1" checked />
+                                        <input class="form-check-input" type="radio" name="Gender" id="femaleGender"
+                                               value="female" checked />
                                         <label class="form-check-label" for="femaleGender">Female</label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="maleGender"
-                                               value="option2" />
+                                        <input class="form-check-input" type="radio" name="Gender" id="maleGender"
+                                               value="male" />
                                         <label class="form-check-label" for="maleGender">Male</label>
                                     </div>
 
                                     <div class="form-check form-check-inline">
-                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="otherGender"
-                                               value="option3" />
+                                        <input class="form-check-input" type="radio" name="Gender" id="otherGender"
+                                               value="other" />
                                         <label class="form-check-label" for="otherGender">Other</label>
                                     </div>
-
+                                    <span class="error-span"></span>
                                 </div>
                             </div>
 
@@ -64,25 +86,28 @@
                                 <div class="col-md-6 mb-4 pb-2">
 
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="email" id="emailAddress" class="form-control form-control-lg" />
                                         <label class="form-label" for="emailAddress">Email</label>
+                                        <input type="email" id="emailAddress" name="Email" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
                                     </div>
 
                                 </div>
                                 <div class="col-md-6 mb-4 pb-2">
 
                                     <div data-mdb-input-init class="form-outline">
-                                        <input type="tel" id="phoneNumber" class="form-control form-control-lg" />
                                         <label class="form-label" for="phoneNumber">Phone Number</label>
+                                        <input type="tel" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg" />
+                                        <span class="error-span"></span>
                                     </div>
 
                                 </div>
                             </div>
 
-                            
+
 
                             <div class="mt-4 pt-2">
-                                <input data-mdb-ripple-init class="btn btn-getstarted btn-lg" type="submit" value="Submit" />
+                                <button type="button" id="registerForm">Register</button>
+
                             </div>
 
                         </form>
@@ -92,70 +117,42 @@
         </div>
     </div>
 </section>
+
 @section Scripts{
-  <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("register").addEventListener("click", function (event) {
-            event.preventDefault(); // Prevent form submission
+    <script>
+             $(document).ready(function () {
+            $('#registerForm').click(function (event) {
+                event.preventDefault(); // Prevent default form submission
 
-            let name = document.getElementById("name");
-            let email = document.getElementById("email");
-            let phone = document.getElementById("phone");
-            let date = document.getElementById("date");
-            let time = document.getElementById("time");
+                let isValid = true;
+                $('.error-span').text(''); // Clear previous error messages
 
-                let emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-            let isValid = true;
+                $('input').each(function () {
+                    if ($(this).val().trim() === '') {
+                        $(this).next('.error-span').text('This field is required').css('color', 'red');
+                        isValid = false;
+                    }
+                });
 
-            // Remove previous error messages
-            document.querySelectorAll(".error_message").forEach(el => el.remove());
-
-            function showError(input, message) {
-                if (!input) return;
-                let error = document.createElement("div");
-                error.className = "error_message";
-                error.style.color = "red";
-                error.style.fontSize = "12px";
-                error.style.marginTop = "5px";
-
-                // Ensure error message is not duplicated
-                if (!input.parentNode.querySelector(".error_message")) {
-                    error.innerText = message;
-                    input.parentNode.appendChild(error);
+                if ($('input[name="Gender"]:checked').length === 0) {
+                    $('input[name="Gender"]').last().nextAll('.error-span').text('Please select a gender').css('color', 'red');
+                    isValid = false;
                 }
-            }
 
-            // Validation checks
-            if (!name.value.trim()) {
-                showError(name, "Name is required");
-                isValid = false;
-            }
-            if (!email.value.trim()) {
-                showError(email, "Email is required");
-                isValid = false;
-            } else if (!emailPattern.test(email.value.trim())) {
-                showError(email, "Invalid email format");
-                isValid = false;
-            }
-            if (!phone.value.trim()) {
-                showError(phone, "Phone number is required");
-                isValid = false;
-            }
-            if (!date.value) {
-                showError(date, "Date is required");
-                isValid = false;
-            }
-            if (!time.value) {
-                showError(time, "Time is required");
-                isValid = false;
-            }
+                let password = $('#password').val().trim();
+                let confirmPassword = $('#confirmPassword').val().trim();
 
-            // If all validations pass, submit the form
-            if (isValid) {
-                document.querySelector("form").submit();
-            }
+                if (password !== confirmPassword) {
+                    $('#confirmPassword').next('.error-span').text('Passwords do not match').css('color', 'red');
+                    isValid = false;
+                }
+
+                if (isValid) {
+                   
+                     $('form').submit();
+                }
+            });
         });
-    });
-</script>
 
+    </script>
 }
