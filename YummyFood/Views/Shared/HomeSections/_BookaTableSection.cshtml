@@ -14,7 +14,8 @@
             <div class="col-lg-4 reservation-img" style="background-image: url(./img/reservation.jpg);"></div>
 
             <div class="col-lg-8 d-flex align-items-center reservation-form-bg" data-aos="fade-up" data-aos-delay="200">
-                <form action="submit" method="post" role="form" class="">
+                <form asp-action="BookTable" asp-controller="BookTable" method="post" role="form" class="">
+
                     <div class="row gy-4">
                         <div class="col-lg-4 col-md-6">
                             <input type="text" name="name" class="form-control" id="name" placeholder="Your Name" required="">
