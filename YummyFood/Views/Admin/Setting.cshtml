@@ -1,4 +1,6 @@
-﻿<style>
+﻿  @model List<User>
+
+<style>
     html, body {
         height: 100%;
         margin: 0;
@@ -41,128 +43,58 @@
         <div class="col-md-9 d-flex align-items-center justify-content-center">
             <div class="container">
                 <div class="card shadow p-4">
-                    <h2 class="text-center mb-4">User Update</h2>
-                    <form asp-action="Registration" asp-controller="Register">
+                    <h2 class="text-center">User Management</h2>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
+                    <!-- Search Box -->
+                    <div class="mb-3">
+                        <input type="text" id="searchEmail" class="form-control" placeholder="Search by Email..." onkeyup="filterUsers()">
+                    </div>
+                    <table border="1">
+                        <thead>
+                            <tr>
+                                <th>UserId</th>
+                                <th>UserName</th>
+                                <th>Email</th>
+                                <th>Birthday</th>
+                                <th>Gender</th>
+                                <th>Phone</th>
+                            </tr>
+                        </thead>
+                        <tbody id="userTable">
+                            @foreach (var user in Model)
+                            {
+                                <tr>
+                                    <td>@user.UserId</td>
+                                    <td>@user.UserName</td>
+                                    <td class="email">@user.Email</td>
+                                    <td>@user.Birthday.ToString("yyyy-MM-dd")</td>
+                                    <td>@user.Gender</td>
+                                    <td>@user.PhoneNumber</td>
+                                    
+                                    <td>
+                                        <a href="/admin/edit/@user.UserId" class="btn btn-warning btn-sm">Edit</a>
+                                        <a href="/admin/delete/@user.UserId" class="btn btn-danger btn-sm" onclick="return confirm('Are you sure?')">Delete</a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="firstName">First Name</label>
-                                    <input type="text" id="firstName" name="FirstName" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="lastName">Last Name</label>
-                                    <input type="text" id="lastName" name="LastName" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-4">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="password">Password</label>
-                                    <input type="password" id="password" name="Password" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="confirmPassword">Confirm Password</label>
-                                    <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-6 mb-4 d-flex align-items-center">
-
-                                <div data-mdb-input-init class="form-outline datepicker w-100">
-                                    <label for="birthdayDate" class="form-label">Birthday</label>
-                                    <input type="date" class="form-control form-control-lg" name="Birthday" id="birthdayDate" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4">
-
-                                <h6 class="mb-2 pb-1">Gender: </h6>
-
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="Gender" id="femaleGender"
-                                           value="female" checked />
-                                    <label class="form-check-label" for="femaleGender">Female</label>
-                                </div>
-
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="Gender" id="maleGender"
-                                           value="male" />
-                                    <label class="form-check-label" for="maleGender">Male</label>
-                                </div>
-
-                                <div class="form-check form-check-inline">
-                                    <input class="form-check-input" type="radio" name="Gender" id="otherGender"
-                                           value="other" />
-                                    <label class="form-check-label" for="otherGender">Other</label>
-                                </div>
-                                <span class="error-span"></span>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-6 mb-4 pb-2">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="emailAddress">Email</label>
-                                    <input type="email" id="emailAddress" name="Email" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4 pb-2">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="phoneNumber">Phone Number</label>
-                                    <input type="tel" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg" />
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                            <div class="col-md-6 mb-4 pb-2">
-
-                                <div data-mdb-input-init class="form-outline">
-                                    <label class="form-label" for="role">Role</label>
-                                    <select class="form-select">
-                                        <option value="User">User</option>
-                                        <option value="Admin">Admin</option>
-                                       
-                                    </select>
-                                    <span class="error-span"></span>
-                                </div>
-
-                            </div>
-                        </div>
-
-
-
-                        <div class="mt-4 pt-2">
-                            <button type="button" class="add-item-btn px-5 py-2" id="updateUserForm">Update</button>
-
-                        </div>
-
-                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
+        function filterUsers() {
+            var input = document.getElementById("searchEmail").value.toLowerCase();
+            var rows = document.querySelectorAll("#userTable tr");
+
+            rows.forEach(row => {
+                var email = row.querySelector(".email").textContent.toLowerCase();
+                row.style.display = email.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+}
