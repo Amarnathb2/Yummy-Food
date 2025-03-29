@@ -1,0 +1,97 @@
+﻿<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .full-height-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+    }
+
+    .row {
+        flex: 1;
+        display: flex;
+    }
+
+    .col-md-3, .col-md-9 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+<!-- Main Content Container -->
+<div class="container-fluid min-vh-100 mt-5">
+    <div class="row h-100">
+        <div class="col-md-3 bg-light h-100">
+            <!-- Sidebar Menu -->
+            <div class="list-group">
+                <a href="/admin" class="list-group-item list-group-item-action ">Dashboard</a>
+                <a href="/setting" class="list-group-item list-group-item-action ">Settings</a>
+                <a href="/add-items" class="list-group-item list-group-item-action active">Add Items</a>
+                <a href="#" class="list-group-item list-group-item-action">Add Chef</a>
+            </div>
+        </div>
+        <div class="col-md-9 d-flex align-items-center justify-content-center">
+            <div class="container">
+
+                @if (TempData["SuccessMessage"] != null)
+                {
+                    <div class="alert alert-success text-center mt-3">@TempData["SuccessMessage"]</div>
+                }
+                @if (TempData["ErrorMessage"] != null)
+                {
+                    <div class="alert alert-danger text-center mt-3">@TempData["ErrorMessage"]</div>
+                }
+                <div class="card shadow p-4">
+                    <h2 class="text-center mb-4">Add New Item</h2>
+                    <form asp-action="AddItem" asp-controller="FoodItem" method="post" enctype="multipart/form-data" class="container">
+                        <div class="mb-3">
+                            <label class="form-label">Item Type:</label>
+                            <select name="ItemType" class="form-select" required>
+                                <option value="">Select Type</option>
+                                <option value="Starters">Starters</option>
+                                <option value="Breakfast">Breakfast</option>
+                                <option value="Lunch">Lunch</option>
+                                <option value="Dinner">Dinner</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Item Name:</label>
+                            <input type="text" name="ItemName" class="form-control" placeholder="Enter item name" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image:</label>
+                            <input type="file" name="ItemImageFile" class="form-control" accept="image/*" required>
+                            <small class="text-muted">Only JPG, PNG, GIF allowed.</small>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Item Details:</label>
+                            <textarea name="ItemDetails" class="form-control" rows="3" placeholder="Enter item details" required></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Item Price:</label>
+                            <input type="number" name="ItemPrice" class="form-control" placeholder="Enter price" step="0.01" required>
+                        </div>
+
+                        <div class="text-center">
+                            <button type="submit" class="btn btn-success px-4 py-2">Add Item</button>
+                        </div>
+                    </form>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
