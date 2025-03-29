@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -45,6 +47,10 @@
                         <li><a href="#chefs">Chefs</a></li>
                         <li><a href="#gallery">Gallery</a></li>
                         <li><a href="#contact">Contact</a></li>
+                        @if (User.IsInRole("Admin"))
+                        {
+                            <li><a href="/Admin">Admin</a></li>
+                        }
                         <li><a href="/Login/Logout">Logout</a></li>
                     }
 
@@ -60,6 +66,7 @@
             {
                 <a class="btn-getstarted" href="/signup">Create an Account</a>
             }
+           
         </div>
     </header>
 

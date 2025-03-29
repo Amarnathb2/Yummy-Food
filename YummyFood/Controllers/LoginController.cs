@@ -25,7 +25,7 @@ namespace YummyFood.Controllers
                 try
                 {
                     connection.Open();
-                    string query = "SELECT UserId, UserName, Password FROM [User] WHERE Email = @Email";
+                    string query = "SELECT UserId, UserName, Password, Role FROM [User] WHERE Email = @Email";
 
                     using (SqlCommand command = new SqlCommand(query, connection))
                     {
@@ -36,6 +36,7 @@ namespace YummyFood.Controllers
                             if (reader.Read())
                             {
                                 string userId = reader["UserId"].ToString();
+                                string userRole = reader["Role"].ToString();
                                 string username = reader["UserName"].ToString();
                                 string hashedPassword = reader["Password"].ToString();
 
@@ -48,9 +49,10 @@ namespace YummyFood.Controllers
                                         new Claim(ClaimTypes.NameIdentifier, userId),
                                         new Claim(ClaimTypes.Name, username),
                                         new Claim(ClaimTypes.Email, email),
-                                        new Claim("UserId", userId) // Custom claim
+                                        new Claim("UserId", userId),
+                                        new Claim(ClaimTypes.Role, userRole)// Custom claim
                                     };
-
+                                   
                                     var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
                                     var authProperties = new AuthenticationProperties
                                     {

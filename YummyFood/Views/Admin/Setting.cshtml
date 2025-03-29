@@ -1,0 +1,168 @@
+﻿<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .full-height-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+    }
+
+    .row {
+        flex: 1;
+        display: flex;
+    }
+
+    .col-md-3, .col-md-9 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+<!-- Main Content Container -->
+<div class="container-fluid min-vh-100 mt-5">
+    <div class="row h-100">
+        <div class="col-md-3 bg-light h-100">
+            <!-- Sidebar Menu -->
+            <div class="list-group">
+                <a href="/admin" class="list-group-item list-group-item-action ">Dashboard</a>
+                <a href="/setting" class="list-group-item list-group-item-action active">Settings</a>
+                <a href="/add-items" class="list-group-item list-group-item-action">Add Items</a>
+                <a href="#" class="list-group-item list-group-item-action">Add Chef</a>
+            </div>
+        </div>
+        <div class="col-md-9 d-flex align-items-center justify-content-center">
+            <div class="container">
+                <div class="card shadow p-4">
+                    <h2 class="text-center mb-4">User Update</h2>
+                    <form asp-action="Registration" asp-controller="Register">
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="firstName">First Name</label>
+                                    <input type="text" id="firstName" name="FirstName" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 mb-4">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="lastName">Last Name</label>
+                                    <input type="text" id="lastName" name="LastName" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="password">Password</label>
+                                    <input type="password" id="password" name="Password" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 mb-4">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="confirmPassword">Confirm Password</label>
+                                    <input type="password" id="confirmPassword" name="ConfirmPassword" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                <div data-mdb-input-init class="form-outline datepicker w-100">
+                                    <label for="birthdayDate" class="form-label">Birthday</label>
+                                    <input type="date" class="form-control form-control-lg" name="Birthday" id="birthdayDate" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 mb-4">
+
+                                <h6 class="mb-2 pb-1">Gender: </h6>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Gender" id="femaleGender"
+                                           value="female" checked />
+                                    <label class="form-check-label" for="femaleGender">Female</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Gender" id="maleGender"
+                                           value="male" />
+                                    <label class="form-check-label" for="maleGender">Male</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="Gender" id="otherGender"
+                                           value="other" />
+                                    <label class="form-check-label" for="otherGender">Other</label>
+                                </div>
+                                <span class="error-span"></span>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-6 mb-4 pb-2">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="emailAddress">Email</label>
+                                    <input type="email" id="emailAddress" name="Email" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 mb-4 pb-2">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="phoneNumber">Phone Number</label>
+                                    <input type="tel" id="phoneNumber" name="PhoneNumber" class="form-control form-control-lg" />
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                            <div class="col-md-6 mb-4 pb-2">
+
+                                <div data-mdb-input-init class="form-outline">
+                                    <label class="form-label" for="role">Role</label>
+                                    <select class="form-select">
+                                        <option value="User">User</option>
+                                        <option value="Admin">Admin</option>
+                                       
+                                    </select>
+                                    <span class="error-span"></span>
+                                </div>
+
+                            </div>
+                        </div>
+
+
+
+                        <div class="mt-4 pt-2">
+                            <button type="button" class="add-item-btn px-5 py-2" id="updateUserForm">Update</button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

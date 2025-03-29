@@ -1,0 +1,42 @@
+﻿<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+    .full-height-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+    .content {
+        flex: 1;
+        display: flex;
+    }
+    .row {
+        flex: 1;
+        display: flex;
+    }
+    .col-md-3, .col-md-9 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+<!-- Main Content Container -->
+<div class="container-fluid min-vh-100 mt-5">
+    <div class="row h-100">
+        <div class="col-md-3 bg-light h-100">
+            <!-- Sidebar Menu -->
+            <div class="list-group">
+                <a href="/admin" class="list-group-item list-group-item-action active">Dashboard</a>
+                <a href="/setting" class="list-group-item list-group-item-action">Settings</a>
+                <a href="/add-items" class="list-group-item list-group-item-action">Add Items</a>
+                <a href="#" class="list-group-item list-group-item-action">Add Chef</a>
+            </div>
+        </div>
+        <div class="col-md-9 d-flex align-items-center justify-content-center">
+            <h2><span>Welcome,</span> @User.Identity.Name!</h2>
+            <p>Discover delicious dishes curated just for you. Enjoy the best appetizers, main courses, desserts, and beverages!</p>
+        </div>
+    </div>
+</div>
