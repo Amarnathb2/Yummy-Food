@@ -1685,3 +1685,14 @@ section,
 .card-registration .select-arrow {
     top: 13px;
 }
+
+/*Admin Dashboard menu*/
+.list-group-item.active {
+    background-color: var(--accent-color);
+    border-color: var(--accent-color);
+}
+h2 span{
+    color:red;
+    font-size:50px;
+    font-weight:bold;
+}
