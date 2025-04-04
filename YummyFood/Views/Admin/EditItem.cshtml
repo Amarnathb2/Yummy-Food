@@ -1,0 +1,105 @@
+﻿@model YummyFood.Models.FoodItemViewModel
+@{
+    ViewBag.Title = "Edit Food Item";
+}
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .full-height-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+    }
+
+    .row {
+        flex: 1;
+        display: flex;
+    }
+
+    .col-md-3, .col-md-9 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+<!-- Main Content Container -->
+<div class="container-fluid min-vh-100 mt-5">
+    <div class="row h-100">
+        <div class="col-md-3 bg-light h-100">
+            <!-- Sidebar Menu -->
+            <div class="list-group">
+                <a href="/admin" class="list-group-item list-group-item-action ">Dashboard</a>
+                <a href="/setting" class="list-group-item list-group-item-action active">Settings</a>
+                <a href="/view-items" class="list-group-item list-group-item-action">View Items</a>
+                <a href="/add-items" class="list-group-item list-group-item-action">Add Items</a>
+                <a href="#" class="list-group-item list-group-item-action">Add Chef</a>
+            </div>
+        </div>
+        <div class="col-md-9 d-flex align-items-center justify-content-center">
+            <div class="container">
+                <div class="card shadow p-4">
+                    <h2 class="text-center">Edit Food Item</h2>
+
+                    <form asp-action="Edit" asp-route-id="@Model.Id" method="post">
+                        <div class="form-group">
+                            <label asp-for="ItemType"></label>
+                            <input asp-for="ItemType" class="form-control" />
+                            <span asp-validation-for="ItemType" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemName"></label>
+                            <input asp-for="ItemName" class="form-control" />
+                            <span asp-validation-for="ItemName" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemPrice"></label>
+                            <input asp-for="ItemPrice" class="form-control" />
+                            <span asp-validation-for="ItemPrice" class="text-danger"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label asp-for="ItemDetails"></label>
+                            <textarea asp-for="ItemDetails" class="form-control"></textarea>
+                            <span asp-validation-for="ItemDetails" class="text-danger"></span>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(Model.ItemImage))
+                        {
+                            <div class="form-group">
+                                <label>Current Image</label><br />
+                                <img src="~/@Model.ItemImage" width="150" />
+                            </div>
+                        }
+
+                        <button type="submit" class="btn btn-success">Update</button>
+                        <a class="btn btn-secondary" href="/admin/items">Cancel</a>
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+            integrity="sha256-o88Awf4S8kN3kU+0GwG6DORZStkTnwn+tb1IG6kLQ7M="
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.min.js"
+            integrity="sha384-gJ+UEI2E8KUXi9c8/yAGrW/ov+5xd+pgmKYHIv5jZTuk3+GSe9wX4cGdXuZ9ZC6j"
+            crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/jquery-validation-unobtrusive@3.2.12/dist/jquery.validate.unobtrusive.min.js"
+            integrity="sha384-FuB1HdFwr3V5y9GbnN9hR4PzjPi+InRMFFvjeoGcLz81TZdcj5+jUmUAKHg2XdEN"
+            crossorigin="anonymous"></script>
+}
