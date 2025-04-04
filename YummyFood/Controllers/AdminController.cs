@@ -142,14 +142,5 @@ namespace YummyFood.Controllers
             return RedirectToAction("Setting");
         }
         #endregion
-       
-        #region AddItems
-        [HttpGet]
-        [Route("/add-items")]
-        public IActionResult AddItems()
-        {
-            return View("~/Views/Admin/AddItems.cshtml");
-        }
-        #endregion
     }
 }

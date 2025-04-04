@@ -75,7 +75,7 @@ namespace YummyFood.Controllers
             }
 
             ViewBag.Error = "Invalid email or password.";
-            return View();
+            return Redirect("/");
         }
 
         [HttpGet]

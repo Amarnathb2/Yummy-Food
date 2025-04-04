@@ -1,0 +1,111 @@
+﻿@model List<FoodItemViewModel>
+<style>
+    html, body {
+        height: 100%;
+        margin: 0;
+    }
+
+    .full-height-container {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .content {
+        flex: 1;
+        display: flex;
+    }
+
+    .row {
+        flex: 1;
+        display: flex;
+    }
+
+    .col-md-3, .col-md-9 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+</style>
+@{
+    ViewBag.Title = "Manage Food Items";
+}
+
+<!-- Main Content Container -->
+<div class="container-fluid min-vh-100 mt-5">
+    <div class="row h-100">
+        <div class="col-md-3 bg-light h-100">
+            <!-- Sidebar Menu -->
+            <div class="list-group">
+                <a href="/admin" class="list-group-item list-group-item-action ">Dashboard</a>
+                <a href="/setting" class="list-group-item list-group-item-action active">Settings</a>
+                <a href="/view-items" class="list-group-item list-group-item-action">View Items</a>
+                <a href="/add-items" class="list-group-item list-group-item-action">Add Items</a>
+                <a href="#" class="list-group-item list-group-item-action">Add Chef</a>
+            </div>
+        </div>
+        <div class="col-md-9 d-flex align-items-center justify-content-center">
+            <div class="container">
+                <div class="card shadow p-4">
+                    <h2 class="text-center">Food Items Management</h2>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+                    }
+                    @if (TempData["ErrorMessage"] != null)
+                    {
+                        <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+                    }
+                    @if (Model.Any())
+                    {
+                        <table class="table table-bordered table-hover">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>Image</th>
+                                    <th>Name</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Details</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @if (!string.IsNullOrEmpty(item.ItemImage))
+                                            {
+                                                <img src="~/@item.ItemImage" alt="Food" width="80" />
+                                            }
+                                            else
+                                            {
+                                                <span>No image</span>
+                                            }
+                                        </td>
+                                        <td>@item.ItemName</td>
+                                        <td>@item.ItemType</td>
+                                        <td>₹@item.ItemPrice</td>
+                                        <td>@item.ItemDetails</td>
+                                        <td>
+                                            <a class="btn btn-sm btn-warning" href="/admin/items/edit/@item.Id">Edit</a>
+                                            <a class="btn btn-sm btn-danger" href="/admin/items/delete/@item.Id" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a>
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    }
+                    else
+                    {
+                        <p class="text-muted">No food items found.</p>
+                    }
+
+                    <a class="btn btn-primary" href="/add-items">+ Add New Item</a>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
