@@ -70,12 +70,21 @@ namespace YummyFood.Controllers
         [HttpGet]
         public IActionResult ResetPassword(string token)
         {
-            return View("~/Views/ForgotPassword/ResetPassword.cshtml", model: token);
+            var model = new ResetPasswordViewModel
+            {
+                Token = token
+            };
+
+            return View("~/Views/ForgotPassword/ResetPassword.cshtml", model);
         }
 
+
         [HttpPost]
-        public async Task<IActionResult> ResetPassword(string token, string newPassword)
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
+            if (!ModelState.IsValid)
+                return View(model);
+
             string connectionString = _configuration.GetConnectionString("DefaultConnection");
 
             using (SqlConnection connection = new SqlConnection(connectionString))
@@ -85,27 +94,29 @@ namespace YummyFood.Controllers
 
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    command.Parameters.AddWithValue("@ResetToken", token);
+                    command.Parameters.AddWithValue("@ResetToken", model.Token);
                     object userId = await command.ExecuteScalarAsync();
 
                     if (userId != null)
                     {
-                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassword);
+                        string hashedPassword = BCrypt.Net.BCrypt.HashPassword(model.NewPassword);
 
                         string updateQuery = "UPDATE [User] SET Password = @Password, ResetToken = NULL WHERE ResetToken = @ResetToken";
                         using (SqlCommand updateCommand = new SqlCommand(updateQuery, connection))
                         {
                             updateCommand.Parameters.AddWithValue("@Password", hashedPassword);
-                            updateCommand.Parameters.AddWithValue("@ResetToken", token);
+                            updateCommand.Parameters.AddWithValue("@ResetToken", model.Token);
                             await updateCommand.ExecuteNonQueryAsync();
                         }
 
-                        return Redirect("/");
+                        return Redirect("/"); // or home page
                     }
                 }
             }
 
-            return BadRequest("Invalid or expired token.");
+            ModelState.AddModelError(string.Empty, "Invalid or expired token.");
+            return View(model);
         }
+
     }
 }
