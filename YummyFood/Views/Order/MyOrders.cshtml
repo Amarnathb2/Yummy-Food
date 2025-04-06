@@ -1,0 +1,23 @@
+﻿@model List<OrderSummaryViewModel>
+
+<h2 class="text-2xl font-bold mb-4">My Orders</h2>
+
+@foreach (var order in Model)
+{
+    <div class="my-order-card border rounded p-4 mb-6 shadow">
+        <h3 class="text-xl font-semibold">Order #@order.OrderId</h3>
+        <p>Date: @order.OrderDate.ToString("dd MMM yyyy hh:mm tt")</p>
+        <p>Status: <strong>@order.Status</strong></p>
+        <p>Total: ₹@order.TotalAmount</p>
+
+        <details class="mt-2">
+            <summary class="cursor-pointer text-blue-600">View Items</summary>
+            <ul class="ml-4 mt-2 list-disc">
+                @foreach (var item in order.Items)
+                {
+                    <li>@item.ItemName - ₹@item.Price × @item.Quantity = ₹@(item.Price * item.Quantity)</li>
+                }
+            </ul>
+        </details>
+    </div>
+}

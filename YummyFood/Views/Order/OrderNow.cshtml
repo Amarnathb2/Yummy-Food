@@ -1,0 +1,54 @@
+﻿@model List<Food>
+@{
+    ViewData["Title"] = "Place an Order";
+    var selectedFilter = ViewBag.SelectedFilter as string ?? "All";
+}
+
+<div class="order-page container py-4">
+    <h2 class="order-title text-center mb-4">Order Food</h2>
+
+    <form asp-action="Index" method="get" class="mb-4 d-flex justify-content-center">
+        <div class="form-group me-2">
+            <select name="itemType" class="form-select order-filter-select">
+                <option value="All" selected="@("All" == selectedFilter)">All</option>
+                <option value="Starters" selected="@("Starters" == selectedFilter)">Starters</option>
+                <option value="Breakfast" selected="@("Breakfast" == selectedFilter)">Breakfast</option>
+                <option value="Lunch" selected="@("Lunch" == selectedFilter)">Lunch</option>
+                <option value="Dinner" selected="@("Dinner" == selectedFilter)">Dinner</option>
+            </select>
+        </div>
+        <button type="submit" class="btn btn-outline-primary">Filter</button>
+    </form>
+
+    <form asp-action="PlaceOrder" method="post">
+        <div class="row">
+            @for (int i = 0; i < Model.Count; i++)
+            {
+                var item = Model[i];
+                <div class="col-md-4 mb-4">
+                    <div class="order-card card h-100 shadow-sm">
+                        <img src="@item.ItemImage" class="order-img card-img-top" alt="@item.ItemName" />
+                        <div class="card-body">
+                            <h5 class="order-item-name card-title">@item.ItemName</h5>
+                            <p class="order-item-details text-muted">@item.ItemDetails</p>
+                            <p class="order-item-price fw-bold text-success">₹@item.ItemPrice</p>
+
+                            <input type="hidden" name="Items[@i].Id" value="@item.Id" />
+                            <input type="hidden" name="Items[@i].ItemName" value="@item.ItemName" />
+                            <input type="hidden" name="Items[@i].ItemPrice" value="@item.ItemPrice" />
+
+                            <div class="mb-2">
+                                <label for="qty-@i" class="form-label">Quantity:</label>
+                                <input type="number" id="qty-@i" name="Items[@i].Quantity" value="0" min="0" class="order-qty-input form-control" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="order-submit-btn btn btn-primary px-5 py-2">Order Now</button>
+        </div>
+    </form>
+</div>
