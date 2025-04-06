@@ -1709,3 +1709,70 @@ h2 span{
         color: var(--contrast-color);
         background: color-mix(in srgb, var(--accent-color), transparent 15%);
     }
+    /*Order Item*/
+.order-food {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+    .order-food h2 {
+        background: linear-gradient(to right, #ff0000, #ff7f7f);
+        -webkit-background-clip: text;
+        color: transparent;
+        text-align: center;
+    }
+
+    .order-food a {
+        display: inline-block;
+        padding: 10px 20px;
+        font-size: 16px;
+        color: #fff;
+        background-color: #ff4500;
+        border: none;
+        border-radius: 5px;
+        text-align: center;
+        text-decoration: none;
+        margin-top: 20px;
+    }
+
+        .order-food a:hover {
+            background-color: #e03e00;
+        }
+
+/*Order page*/
+.order-page {
+    background-color: #f9f9f9;
+}
+
+.order-title {
+    font-size: 2rem;
+    font-weight: bold;
+}
+
+.order-card {
+    border-radius: 10px;
+    transition: transform 0.2s ease-in-out;
+}
+
+    .order-card:hover {
+        transform: scale(1.02);
+    }
+
+.order-img {
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px 10px 0 0;
+}
+
+.order-qty-input {
+    max-width: 80px;
+}
+
+.order-submit-btn {
+    font-size: 1.1rem;
+}
+.order-filter-select {
+    min-width: 200px;
+}
