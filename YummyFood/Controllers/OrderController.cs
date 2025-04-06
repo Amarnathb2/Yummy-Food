@@ -8,10 +8,12 @@ namespace YummyFood.Controllers
     public class OrderController : Controller
     {
         private readonly IConfiguration _configuration;
+        private readonly EmailService _emailService;
 
-        public OrderController(IConfiguration configuration)
+        public OrderController(IConfiguration configuration, EmailService emailService)
         {
             _configuration = configuration;
+            _emailService = emailService;
         }
 
         [HttpGet]
@@ -61,9 +63,12 @@ namespace YummyFood.Controllers
 
 
         [HttpPost]
-        public IActionResult PlaceOrder(List<Food> Items)
+        public async Task<IActionResult> PlaceOrderAsync(List<Food> Items)
         {
             var userId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            // Optional: fetch user's email if not stored in Claims
+            var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
+
             if (string.IsNullOrEmpty(userId))
             {
                 return Redirect("/login");
@@ -130,6 +135,21 @@ namespace YummyFood.Controllers
                 TotalAmount = totalAmount,
                 Status = OrderStatus.Placed
             };
+            if (orderId > 0)
+            {
+                string subject = "YummyFood Order Confirmation";
+                string message = $@"
+        <h3>Hi,</h3>
+        <p>Thank you for placing your order with <strong>YummyFood</strong>.</p>
+        <p>Your Order ID is <strong>{orderId}</strong> and the total amount is ₹<strong>{totalAmount}</strong>.</p>
+        <p>We are preparing your food with love! 🍕🍔</p>
+        <p><em>Bon appétit!</em></p>";
+               
+                if (!string.IsNullOrEmpty(userEmail))
+                {
+                    await _emailService.SendEmailAsync(userEmail, subject, message);
+                }
+            }
 
             return View("OrderSuccess", order);
         }
